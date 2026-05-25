@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  # ── KAIROS API ──────────────────────────────────────────────────
+  kairos-api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - KAIROS_LOG_LEVEL=info
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
+
+  # ── Interactive Dashboard ───────────────────────────────────────
+  kairos-dashboard:
+    build: .
+    command: streamlit run kairos/visualization/dashboard.py --server.port 8501 --server.address 0.0.0.0
+    ports:
+      - "8501:8501"
+    depends_on:
+      - kairos-api
+    restart: unless-stopped

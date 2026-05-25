@@ -1,0 +1,69 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kairos"
+version = "0.1.0"
+description = "Kinetic Adaptive Intelligence for Recursive Oscillatory Synthesis"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.10"
+authors = [
+    {name = "Dustin Groves", email = "bathsaltone@gmail.com"},
+]
+keywords = ["chaos-theory", "dynamical-systems", "neuroscience", "quantum-inspired", "AI"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+dependencies = [
+    "numpy>=1.24",
+    "scipy>=1.10",
+]
+
+[project.optional-dependencies]
+api = [
+    "fastapi>=0.100",
+    "uvicorn[standard]>=0.22",
+]
+viz = [
+    "matplotlib>=3.7",
+    "plotly>=5.15",
+    "streamlit>=1.25",
+]
+all = [
+    "kairos[api,viz]",
+]
+dev = [
+    "kairos[all]",
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "ruff>=0.1",
+]
+
+[project.scripts]
+kairos = "kairos.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/BathSalt-2/kairos"
+Repository = "https://github.com/BathSalt-2/kairos"
+Issues = "https://github.com/BathSalt-2/kairos/issues"
+
+[tool.setuptools.packages.find]
+include = ["kairos*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v --tb=short"
+
+[tool.ruff]
+target-version = "py310"
+line-length = 120
